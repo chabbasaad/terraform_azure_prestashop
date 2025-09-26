@@ -1,0 +1,23 @@
+# Local .terraform directories
+**/.terraform/*
+**/.idea/*
+# Ignore variables files
+*.auto.tfvars
+
+# Ignore override files
+*.tfoverride
+
+# Ignore environment-specific files
+.envrc
+
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
+
+*.tfstate
+*.tfstate.*
+
+.terraform.lock.hcl
+.terraform.tfstate.backup
+./idea
+

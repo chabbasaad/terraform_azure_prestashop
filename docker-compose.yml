@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: prestashop-mysql
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: prestashop
+    networks:
+      - prestashop_network
+
+  prestashop:
+    container_name: prestashop
+    image: prestashop/prestashop:latest
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    environment:
+      # Database configuration
+      DB_SERVER: prestashop-mysql
+      DB_NAME: prestashop
+      DB_USER: root
+      DB_PASSWD: admin
+      
+      # Auto installation with demo data
+      PS_INSTALL_AUTO: 1
+      PS_DOMAIN: localhost:8080
+      PS_DEMO_MODE: 1
+      
+      # Admin credentials
+      ADMIN_MAIL: admin@taylorshift.local
+      ADMIN_PASSWD: admin123
+      
+      # Custom folder names for security
+      PS_FOLDER_ADMIN: admin-taylor
+      PS_FOLDER_INSTALL: install-taylor
+    networks:
+      - prestashop_network
+
+networks:
+  prestashop_network:
+    driver: bridge
