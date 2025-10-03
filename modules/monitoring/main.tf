@@ -7,6 +7,19 @@ resource "random_string" "monitoring_suffix" {
   upper   = false
 }
 
+resource "azurerm_log_analytics_workspace" "main" {
+  name                = "log-${var.environment}-${random_string.monitoring_suffix.result}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+
+  tags = {
+    Environment = var.environment
+    Project     = "taylor-shift"
+  }
+}
+
 # Action Group pour les notifications
 resource "azurerm_monitor_action_group" "main" {
   name                = "ts-alerts-${var.environment}"
@@ -48,12 +61,6 @@ resource "azurerm_monitor_metric_alert" "database_cpu" {
     aggregation      = "Average"
     operator         = "GreaterThan"
     threshold        = var.environment == "prod" ? 80 : 90
-
-    dimension {
-      name     = "ResourceId"
-      operator = "Include"
-      values   = [var.database_id]
-    }
   }
 
   action {
@@ -179,7 +186,7 @@ resource "azurerm_portal_dashboard" "main" {
   name                = "taylor-shift-dashboard-${var.environment}"
   resource_group_name = var.resource_group_name
   location            = var.location
-  
+
   dashboard_properties = templatefile("${path.module}/dashboard.json", {
     subscription_id         = var.subscription_id
     resource_group_name     = var.resource_group_name

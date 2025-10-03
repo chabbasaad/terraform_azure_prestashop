@@ -10,7 +10,6 @@ variable "location" {
 variable "subscription_id" {
   description = "ID de la subscription Azure"
   type        = string
-  default     = "98986790-05f9-4237-b612-4814a09270dd"  # Remplacer par votre subscription
 }
 
 # Variables de base de données (sécurisées)

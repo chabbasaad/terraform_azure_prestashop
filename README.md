@@ -118,7 +118,7 @@ taylor-shift/
 
 ```bash
 cd environments/dev
-cp terraform.tfvars.example terraform.tfvars
+cp terraform.tfvars terraform.tfvars
 # Éditer terraform.tfvars avec vos valeurs
 terraform init
 terraform apply
@@ -130,7 +130,7 @@ terraform apply
 
 ```bash
 cd environments/staging
-cp terraform.tfvars.example terraform.tfvars
+cp terraform.tfvars terraform.tfvars
 # Configuration proche de la production
 terraform init
 terraform apply
@@ -142,7 +142,7 @@ terraform apply
 
 ```bash
 cd environments/prod
-cp terraform.tfvars.example terraform.tfvars
+cp terraform.tfvars terraform.tfvars
 # ⚠️ Vérifier toutes les configurations de sécurité
 terraform init
 terraform plan -out=prod.tfplan
@@ -197,7 +197,7 @@ ab -n 10000 -c 1000 -t 60 https://your-app-url/
 ### Variables communes
 
 ```hcl
-# terraform.tfvars.example
+# terraform.tfvars
 location = "West Europe"
 admin_email = "admin@taylorshift.com"
 db_password = "VotreMotDePasseSécurisé!"

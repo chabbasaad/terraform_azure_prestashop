@@ -29,7 +29,8 @@ resource "azurerm_key_vault" "main" {
       "List",
       "Set",
       "Delete",
-      "Recover"
+      "Recover",
+      "Purge"  #
     ]
   }
 
@@ -56,7 +57,6 @@ resource "azurerm_key_vault_secret" "db_password" {
   key_vault_id = azurerm_key_vault.main.id
 }
 
-# Secret pour les credentials DockerHub
 resource "azurerm_key_vault_secret" "dockerhub_username" {
   name         = "dockerhub-username"
   value        = var.dockerhub_username
@@ -69,14 +69,13 @@ resource "azurerm_key_vault_secret" "dockerhub_password" {
   key_vault_id = azurerm_key_vault.main.id
 }
 
-# Secret pour la clé PrestaShop
+resource "random_password" "prestashop_key" {
+  length  = 32
+  special = true
+}
+
 resource "azurerm_key_vault_secret" "prestashop_key" {
   name         = "prestashop-key"
   value        = random_password.prestashop_key.result
   key_vault_id = azurerm_key_vault.main.id
-}
-
-resource "random_password" "prestashop_key" {
-  length  = 32
-  special = true
 }

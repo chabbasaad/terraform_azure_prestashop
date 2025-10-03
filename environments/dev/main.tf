@@ -1,6 +1,3 @@
-# Simplified Dev Environment for Taylor Shift
-# Based on working version but with Container Apps for scaling
-
 terraform {
   required_version = ">= 1.5"
   required_providers {
@@ -25,62 +22,55 @@ provider "azurerm" {
       prevent_deletion_if_contains_resources = false
     }
   }
-  subscription_id            = "98986790-05f9-4237-b612-4814a09270dd"
+  subscription_id            = var.subscription_id
   skip_provider_registration = false
 }
 
 provider "random" {}
 
-# Resource Group
 resource "azurerm_resource_group" "main" {
-  name     = "rg-taylor-shift-${var.environment}"
+  name     = "rg-${local.project}-${local.environment}"
   location = var.location
-
-  tags = {
-    Environment = var.environment
-    Project     = "taylor-shift"
-    ManagedBy   = "terraform"
-  }
+  tags     = local.common_tags
 }
 
-# Database Module
+
+resource "azurerm_log_analytics_workspace" "monitoring" {
+  name                = "ts-log-dev"
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  sku                 = "PerGB2018"
+  retention_in_days   = 30
+}
+
+
 module "database" {
   source = "../../modules/database"
 
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
-  environment         = var.environment
+  environment         = local.environment
   admin_user          = var.db_admin_user
   admin_password      = var.db_password
+
+  storage_size_gb       = local.config.db_storage_gb
+  enable_monitoring     = local.config.enable_monitoring
+  db_sku_name           = local.config.db_sku
+  backup_retention_days = local.config.db_backup_retention
 }
 
-# PrestaShop Module (with Container Apps for scaling)
 module "prestashop" {
   source = "../../modules/prestashop-simple"
 
-  location            = var.location
-  resource_group_name = azurerm_resource_group.main.name
-  environment         = var.environment
-  db_host             = module.database.db_host
-  db_name             = "prestashop"
-  db_user             = var.db_admin_user
-  db_password         = var.db_password
-  admin_email         = var.admin_email
-  admin_password      = var.prestashop_admin_password
-}
+  location                    = var.location
+  resource_group_name         = azurerm_resource_group.main.name
+  environment                 = local.environment
+  db_host                     = module.database.db_host
+  db_name                     = "prestashop"
+  db_user                     = var.db_admin_user
+  db_password                 = var.db_password
+  admin_email                 = var.admin_email
+  admin_password              = var.prestashop_admin_password
 
-# Outputs
-output "database_connection_info" {
-  description = "Database connection information"
-  value = {
-    host     = module.database.db_host
-    database = "prestashop"
-    port     = 3306
-  }
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.monitoring.id
 }
-
-output "prestashop_url" {
-  description = "PrestaShop application URL"
-  value       = module.prestashop.prestashop_url
-}
-

@@ -1,10 +1,3 @@
-# Outputs pour l'environnement de staging
-
-output "resource_group_name" {
-  description = "Nom du groupe de ressources"
-  value       = azurerm_resource_group.main.name
-}
-
 output "prestashop_url" {
   description = "URL de l'application PrestaShop"
   value       = module.prestashop.app_url
@@ -26,6 +19,7 @@ output "admin_access" {
     admin_email      = var.admin_email
     admin_url        = "${module.prestashop.app_url}/admin"
   }
+  sensitive =  true
 }
 
 output "monitoring_info" {
@@ -54,7 +48,6 @@ output "secrets_info" {
   }
 }
 
-# Configuration pour les tests de performance
 output "load_testing_config" {
   description = "Configuration pour les tests de charge"
   value = {

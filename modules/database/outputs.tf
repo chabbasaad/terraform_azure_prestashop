@@ -24,3 +24,10 @@ output "server_name" {
   description = "Database server name"
   value       = azurerm_mysql_flexible_server.main.name
 }
+output "database_name" {
+  value = azurerm_mysql_flexible_server.main.name
+}
+
+output "db_port" {
+  value = 3306 //TODO
+}

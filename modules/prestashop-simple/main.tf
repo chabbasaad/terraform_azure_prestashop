@@ -19,12 +19,32 @@ resource "azurerm_container_app_environment" "main" {
   }
 }
 
+resource "azurerm_user_assigned_identity" "prestashop" {
+  name                = "identity-${var.environment}"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
+resource "azurerm_application_insights" "prestashop" {
+  name                = "ai-${var.environment}"
+  location            = var.location
+
+  workspace_id   = var.log_analytics_workspace_id
+  resource_group_name = var.resource_group_name
+  application_type    = "web"
+}
+
 # Container App for PrestaShop
 resource "azurerm_container_app" "prestashop" {
   name                         = "prestashop-${var.environment}"
   container_app_environment_id = azurerm_container_app_environment.main.id
   resource_group_name          = var.resource_group_name
   revision_mode                = "Single"
+
+  identity {
+    type         = "UserAssigned"
+    identity_ids = [azurerm_user_assigned_identity.prestashop.id]
+  }
 
   template {
     min_replicas = 1

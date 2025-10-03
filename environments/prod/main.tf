@@ -15,12 +15,12 @@ terraform {
   }
 
   # Backend pour stocker l'état Terraform (OBLIGATOIRE pour production)
-  backend "azurerm" {
+ /** backend "azurerm" {
     resource_group_name  = "ts-tfstate-rg"
     storage_account_name = "tstfstateprod"
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
-  }
+  }*/
 }
 
 provider "azurerm" {
@@ -37,46 +37,7 @@ provider "azurerm" {
 
 provider "random" {}
 
-# Configuration des variables locales pour l'environnement production
-locals {
-  environment = "prod"
-  project     = "taylor-shift"
-  
-  # Tags communs
-  common_tags = {
-    Environment = local.environment
-    Project     = local.project
-    ManagedBy   = "terraform"
-    CreatedBy   = "taylor-shift-team"
-    CostCenter  = "taylor-shift-concerts"
-    Compliance  = "required"
-  }
 
-  # Configuration spécifique à la production (haute performance)
-  config = {
-    # Base de données - Configuration haute performance
-    db_sku              = "GP_Standard_D4ds_v4"    # SKU haute performance
-    db_storage_gb       = 512                      # Stockage important
-    db_backup_retention = 35                       # Rétention longue (5 semaines)
-    
-    # Application - Configuration pour haute charge
-    min_replicas = 5                               # 5 répliques minimum
-    max_replicas = 50                              # 50 répliques maximum pour le concert
-    cpu_limit    = 2.0                             # CPU élevé
-    memory_limit = "4Gi"                           # Mémoire élevée
-    
-    # Monitoring
-    enable_monitoring = true                       # Monitoring complet obligatoire
-    
-    # Networking
-    enable_vnet = true                             # VNet obligatoire en production
-    enable_private_dns = true                      # DNS privé pour sécurité
-    
-    # Seuils de performance
-    concurrent_requests_threshold = 5              # Seuil très bas pour scaling rapide
-    autoscaling_response_time = "30s"              # Scaling très rapide
-  }
-}
 
 # Groupe de ressources principal
 resource "azurerm_resource_group" "main" {
@@ -89,6 +50,8 @@ resource "azurerm_resource_group" "main" {
   lifecycle {
     prevent_destroy = true
   }
+  subscription_id            = var.subscription_id
+
 }
 
 # Module de mise en réseau (obligatoire pour production)
@@ -142,7 +105,7 @@ module "database" {
 
 # Module PrestaShop (haute performance)
 module "prestashop" {
-  source = "../../modules/prestashop"
+  source = "../../modules/prestashop-simple"
 
   location                     = var.location
   resource_group_name          = azurerm_resource_group.main.name

@@ -18,3 +18,8 @@ output "alert_rules" {
     app_error_rate       = var.enable_app_alerts ? azurerm_monitor_metric_alert.app_error_rate[0].id : null
   }
 }
+
+output "log_analytics_workspace_id" {
+  value = azurerm_log_analytics_workspace.main.id
+}
+
