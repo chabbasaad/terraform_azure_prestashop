@@ -99,7 +99,7 @@ module "database" {
 }
 
 module "prestashop" {
-  source = "../../modules/prestashop-simple"
+  source = "../../modules/prestashop"
   location                     = var.location
   resource_group_name          = azurerm_resource_group.main.name
   environment                  = local.environment
@@ -117,7 +117,7 @@ module "prestashop" {
   admin_password               = var.prestashop_admin_password
   domain_name                  = var.custom_domain
 
-  log_analytics_workspace_id = module.monitoring.log_analytics_workspace_id
+  log_analytics_workspace_id = azurerm_log_analytics_workspace.monitoring.id
 }
 
 module "monitoring" {
