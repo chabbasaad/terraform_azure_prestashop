@@ -44,3 +44,9 @@ variable "enable_ssl_enforcement" {
   default     = true
 }
 
+variable "shared_container_app_environment_id" {
+  description = "ID of the Container App Environment to share (from dev environment)"
+  type        = string
+  default     = ""
+}
+

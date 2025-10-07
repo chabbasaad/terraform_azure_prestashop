@@ -35,13 +35,7 @@ resource "azurerm_resource_group" "main" {
 }
 
 
-resource "azurerm_log_analytics_workspace" "monitoring" {
-  name                = "ts-log-dev"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.main.name
-  sku                 = "PerGB2018"
-  retention_in_days   = 30
-}
+# Log Analytics removed for faster dev deployment
 
 
 module "database" {
@@ -62,15 +56,16 @@ module "database" {
 module "prestashop" {
   source = "../../modules/prestashop"
 
-  location                    = var.location
-  resource_group_name         = azurerm_resource_group.main.name
-  environment                 = local.environment
-  db_host                     = module.database.db_host
-  db_name                     = "prestashop"
-  db_user                     = var.db_admin_user
-  db_password                 = var.db_password
-  admin_email                 = var.admin_email
-  admin_password              = var.prestashop_admin_password
-
-  log_analytics_workspace_id = azurerm_log_analytics_workspace.monitoring.id
+  location                     = var.location
+  resource_group_name          = azurerm_resource_group.main.name
+  environment                  = local.environment
+  db_host                      = module.database.db_host
+  db_name                      = "prestashop"
+  db_user                      = var.db_admin_user
+  db_password                  = var.db_password
+  admin_email                  = var.admin_email
+  admin_password               = var.prestashop_admin_password
+  
+  # Force explicit dependency to ensure database is ready
+  depends_on = [module.database]
 }

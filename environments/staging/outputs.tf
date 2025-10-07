@@ -1,6 +1,22 @@
 output "prestashop_url" {
-  description = "URL de l'application PrestaShop"
-  value       = module.prestashop.app_url
+  description = "URL to access PrestaShop"
+  value       = "https://${module.prestashop.fqdn}"
+}
+
+output "container_app_fqdn" {
+  description = "Container App FQDN"
+  value       = module.prestashop.fqdn
+}
+
+output "container_app_url" {
+  description = "Container App URL with HTTPS"
+  value       = "https://${module.prestashop.fqdn}"
+}
+
+output "database_host" {
+  description = "Database host"
+  value       = module.database.db_host
+  sensitive   = true
 }
 
 output "database_connection_info" {
@@ -10,63 +26,51 @@ output "database_connection_info" {
     database = module.database.database_name
     port     = module.database.db_port
   }
+  sensitive   = true
+}
+
+output "resource_group_name" {
+  description = "Resource group name"
+  value       = azurerm_resource_group.main.name
 }
 
 output "admin_access" {
   description = "Informations d'accès administrateur"
   value = {
-    prestashop_url   = module.prestashop.app_url
+    prestashop_url   = "https://${module.prestashop.fqdn}"
     admin_email      = var.admin_email
-    admin_url        = "${module.prestashop.app_url}/admin"
+    admin_url        = "https://${module.prestashop.fqdn}/adminportal"
   }
-  sensitive =  true
-}
-
-output "monitoring_info" {
-  description = "Informations de monitoring"
-  value = {
-    dashboard_id     = module.monitoring.dashboard_id
-    action_group_id  = module.monitoring.action_group_id
-    alert_rules      = module.monitoring.alert_rules
-  }
-}
-
-output "networking_info" {
-  description = "Informations de réseau"
-  value = {
-    vnet_id                    = module.networking.vnet_id
-    container_apps_subnet_id   = module.networking.container_apps_subnet_id
-    database_subnet_id         = module.networking.database_subnet_id
-  }
-}
-
-output "secrets_info" {
-  description = "Informations sur le Key Vault"
-  value = {
-    key_vault_name = module.secrets.key_vault_name
-    key_vault_id   = module.secrets.key_vault_id
-  }
+  sensitive = true
 }
 
 output "load_testing_config" {
   description = "Configuration pour les tests de charge"
   value = {
-    target_url              = module.prestashop.app_url
+    target_url              = "https://${module.prestashop.fqdn}"
     expected_max_replicas   = 8
     concurrent_users_test   = 50
     duration_minutes        = 10
   }
 }
 
-# Output sensible pour les scripts d'automatisation
-output "database_password" {
-  description = "Mot de passe de la base de données"
-  value       = var.db_password
-  sensitive   = true
+output "application_insights" {
+  description = "Application Insights monitoring information"
+  value = {
+    name                = azurerm_application_insights.prestashop.name
+    instrumentation_key = azurerm_application_insights.prestashop.instrumentation_key
+    app_id              = azurerm_application_insights.prestashop.app_id
+    connection_string   = azurerm_application_insights.prestashop.connection_string
+  }
+  sensitive = true
 }
 
-output "application_insights_connection_string" {
-  description = "Chaîne de connexion Application Insights"
-  value       = module.prestashop.application_insights_connection_string
-  sensitive   = true
+output "log_analytics_workspace" {
+  description = "Log Analytics Workspace information"
+  value = {
+    name         = azurerm_log_analytics_workspace.monitoring.name
+    workspace_id = azurerm_log_analytics_workspace.monitoring.workspace_id
+  }
 }
+
+# Networking and Secrets outputs removed for simplified staging deployment

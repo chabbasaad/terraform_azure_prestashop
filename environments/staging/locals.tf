@@ -17,7 +17,6 @@ locals {
     max_replicas        = 8
     cpu_limit           = 1.0
     memory_limit        = "2Gi"
-    enable_monitoring   = true
-    enable_vnet         = true
+    enable_monitoring   = false  # Simplified staging - no monitoring module
   }
 }

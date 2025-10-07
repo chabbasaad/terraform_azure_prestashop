@@ -10,7 +10,4 @@ db_password = "TaylorShift2025!Dev"  # Changez ce mot de passe
 # Configuration PrestaShop
 admin_email = "admin@taylorshift-dev.com"  # Votre email
 prestashop_admin_password = "TaylorAdmin2025!Dev"  # Mot de passe admin PrestaShop
-
-# Configuration DockerHub (optionnel pour dev) // todo a supprime
-dockerhub_username = "hampza"
-dockerhub_password = "Bandello31!!!"
+custom_domain = "localhost"  # Domaine pour dev

@@ -41,11 +41,7 @@ variable "admin_email" {
   type        = string
 }
 
-variable "log_analytics_workspace_id" {
-  description = "Analistics"
-  type        = string
-  default = "subscriptions/eb10ec54-cd75-4a07-89a3-cc597b358808/resourceGroups/rg-monitoring/providers/Microsoft.OperationalInsights/workspaces/ts-log-dev"
-}
+# Log analytics variable removed for faster dev deployment
 
 variable "admin_password" {
   description = "PrestaShop admin password"

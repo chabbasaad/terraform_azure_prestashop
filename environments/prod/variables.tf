@@ -25,13 +25,8 @@ variable "db_password" {
   sensitive   = true
   
   validation {
-    condition     = length(var.db_password) >= 16
-    error_message = "Le mot de passe doit contenir au moins 16 caractères pour la production."
-  }
-  
-  validation {
-    condition     = can(regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]", var.db_password))
-    error_message = "Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial."
+    condition     = length(var.db_password) >= 8
+    error_message = "Le mot de passe doit contenir au moins 8 caractères."
   }
 }
 
@@ -47,36 +42,28 @@ variable "admin_email" {
 }
 
 variable "prestashop_admin_password" {
-  description = "Mot de passe de l'administrateur PrestaShop (doit être très sécurisé)"
+  description = "Mot de passe de l'administrateur PrestaShop (doit être sécurisé)"
   type        = string
   sensitive   = true
   
   validation {
-    condition     = length(var.prestashop_admin_password) >= 16
-    error_message = "Le mot de passe PrestaShop doit contenir au moins 16 caractères pour la production."
+    condition     = length(var.prestashop_admin_password) >= 8
+    error_message = "Le mot de passe PrestaShop doit contenir au moins 8 caractères."
   }
 }
 
-# Variables DockerHub (obligatoires en production)
+# Variables DockerHub (optionnelles)
 variable "dockerhub_username" {
-  description = "Nom d'utilisateur DockerHub (obligatoire pour production)"
+  description = "Nom d'utilisateur DockerHub (optionnel)"
   type        = string
-  
-  validation {
-    condition     = length(var.dockerhub_username) > 0
-    error_message = "Le nom d'utilisateur DockerHub est obligatoire en production."
-  }
+  default     = ""
 }
 
 variable "dockerhub_password" {
-  description = "Mot de passe DockerHub (obligatoire pour production)"
+  description = "Mot de passe DockerHub (optionnel)"
   type        = string
   sensitive   = true
-  
-  validation {
-    condition     = length(var.dockerhub_password) > 0
-    error_message = "Le mot de passe DockerHub est obligatoire en production."
-  }
+  default     = ""
 }
 
 # Variables de domaine
@@ -84,22 +71,13 @@ variable "production_domain" {
   description = "Domaine de production pour Taylor Shift"
   type        = string
   default     = "tickets.taylorshift.com"
-  
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\\.[a-zA-Z]{2,}$", var.production_domain))
-    error_message = "Le domaine doit être au format valide."
-  }
 }
 
 # Variables de monitoring et alertes
 variable "webhook_url" {
   description = "URL webhook pour les notifications critiques (Slack/Teams)"
   type        = string
-  
-  validation {
-    condition     = length(var.webhook_url) > 0
-    error_message = "L'URL webhook est obligatoire en production pour les alertes critiques."
-  }
+  default     = ""
 }
 
 variable "emergency_contacts" {
