@@ -34,11 +34,6 @@ variable "admin_email" {
   type        = string
 }
 
-variable "webhook_url" {
-  description = "URL du webhook pour les notifications (Slack/Teams)"
-  type        = string
-  default     = ""
-}
 
 variable "database_id" {
   description = "ID de la base de données à surveiller"

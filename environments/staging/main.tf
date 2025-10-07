@@ -43,7 +43,7 @@ resource "azurerm_storage_account" "tfstate" {
   account_tier             = "Standard"
   account_replication_type = "LRS"
   //allow_blob_public_access = false
-  tags                     = local.common_tags
+  tags = local.common_tags
 }
 
 resource "azurerm_storage_container" "tfstate" {
@@ -81,13 +81,13 @@ resource "azurerm_application_insights" "prestashop" {
 
 module "database" {
   source = "../../modules/database"
-  
+
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   environment         = local.environment
   admin_user          = var.db_admin_user
   admin_password      = var.db_password
-  
+
   storage_size_gb       = local.config.db_storage_gb
   enable_monitoring     = local.config.enable_monitoring
   db_sku_name           = local.config.db_sku
@@ -96,7 +96,7 @@ module "database" {
 
 module "prestashop" {
   source = "../../modules/prestashop"
-  
+
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   environment         = local.environment
@@ -106,7 +106,7 @@ module "prestashop" {
   db_password         = var.db_password
   admin_email         = var.admin_email
   admin_password      = var.prestashop_admin_password
-  
+
   # Force explicit dependency to ensure database is ready
   depends_on = [module.database, azurerm_application_insights.prestashop]
 }

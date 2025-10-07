@@ -1,4 +1,4 @@
-﻿output "prestashop_url" {
+output "prestashop_url" {
   description = "URL to access PrestaShop"
   value       = "https://${module.prestashop.fqdn}"
 }

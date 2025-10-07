@@ -1,4 +1,4 @@
-﻿# Configuration PROD optimisée avec Redis Standard C0
+# Configuration PROD optimisée avec Redis Standard C0
 terraform {
   required_version = ">= 1.5"
   required_providers {
@@ -82,31 +82,31 @@ resource "azurerm_redis_cache" "prestashop" {
   name                = "redis-${local.project}-${local.environment}"
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
-  
-    capacity            = 1
-    family              = "C"
-    sku_name            = "Basic"
-  
+
+  capacity = 1
+  family   = "C"
+  sku_name = "Basic"
+
   public_network_access_enabled = true
-  minimum_tls_version = "1.2"
-  
+  minimum_tls_version           = "1.2"
+
   redis_configuration {
     maxmemory_policy = "allkeys-lru"
   }
-  
+
   tags = local.common_tags
 }
 
 # Module Database
 module "database" {
   source = "../../modules/database"
-  
-  location              = var.location
-  resource_group_name   = azurerm_resource_group.main.name
-  environment           = local.environment
-  admin_user            = var.db_admin_user
-  admin_password        = var.db_password
-  
+
+  location            = var.location
+  resource_group_name = azurerm_resource_group.main.name
+  environment         = local.environment
+  admin_user          = var.db_admin_user
+  admin_password      = var.db_password
+
   storage_size_gb       = local.config.db_storage_gb
   enable_monitoring     = local.config.enable_monitoring
   db_sku_name           = local.config.db_sku
@@ -116,7 +116,7 @@ module "database" {
 # Module PrestaShop
 module "prestashop" {
   source = "../../modules/prestashop"
-  
+
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
   environment         = local.environment
@@ -126,11 +126,7 @@ module "prestashop" {
   db_password         = var.db_password
   admin_email         = var.admin_email
   admin_password      = var.prestashop_admin_password
-  
-  min_replicas        = local.config.min_replicas
-  max_replicas        = local.config.max_replicas
-  cpu_limit           = local.config.cpu_limit
-  memory_limit        = local.config.memory_limit
-  
+
+
   depends_on = [module.database, azurerm_redis_cache.prestashop, azurerm_application_insights.prestashop]
 }

@@ -31,15 +31,6 @@ resource "azurerm_monitor_action_group" "main" {
     email_address = var.admin_email
   }
 
-  # Webhook pour Slack/Teams (optionnel)
-  dynamic "webhook_receiver" {
-    for_each = var.webhook_url != "" ? [1] : []
-    content {
-      name        = "webhook"
-      service_uri = var.webhook_url
-    }
-  }
-
   tags = {
     Environment = var.environment
     Project     = "taylor-shift"

@@ -26,7 +26,7 @@ output "database_connection_info" {
     database = module.database.database_name
     port     = module.database.db_port
   }
-  sensitive   = true
+  sensitive = true
 }
 
 output "resource_group_name" {
@@ -37,9 +37,9 @@ output "resource_group_name" {
 output "admin_access" {
   description = "Informations d'accès administrateur"
   value = {
-    prestashop_url   = "https://${module.prestashop.fqdn}"
-    admin_email      = var.admin_email
-    admin_url        = "https://${module.prestashop.fqdn}/adminportal"
+    prestashop_url = "https://${module.prestashop.fqdn}"
+    admin_email    = var.admin_email
+    admin_url      = "https://${module.prestashop.fqdn}/adminportal"
   }
   sensitive = true
 }
@@ -47,10 +47,10 @@ output "admin_access" {
 output "load_testing_config" {
   description = "Configuration pour les tests de charge"
   value = {
-    target_url              = "https://${module.prestashop.fqdn}"
-    expected_max_replicas   = 8
-    concurrent_users_test   = 50
-    duration_minutes        = 10
+    target_url            = "https://${module.prestashop.fqdn}"
+    expected_max_replicas = 8
+    concurrent_users_test = 50
+    duration_minutes      = 10
   }
 }
 

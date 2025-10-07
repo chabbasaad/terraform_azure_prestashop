@@ -3,14 +3,14 @@ locals {
   project     = "taylor-shift"
 
   common_tags = {
-    Environment = "staging"
-    Project     = "taylor-shift"
+    Environment = local.environment
+    Project     = local.project
     ManagedBy   = "terraform"
     CreatedBy   = "taylor-shift-team"
   }
 
   config = {
-    db_sku              = "B_Standard_B1ms	"
+    db_sku              = "B_Standard_B1ms"
     db_storage_gb       = 128
     db_backup_retention = 14
     min_replicas        = 2
