@@ -79,7 +79,7 @@ Each environment has its own `terraform.tfvars` file located in `environments/{d
 > - `environments/prod/terraform.tfvars` - Production environment settings
 
 
-## 🔗 Application Access & Credentials
+## 🔗 Application Access Example & Credentials
 
 ### 🧪 Development Environment
 - **Application URL**: `https://prestashop-dev-XXXXXXXX.region.azurecontainerapps.io`
