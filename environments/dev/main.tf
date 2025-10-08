@@ -29,13 +29,10 @@ provider "azurerm" {
 provider "random" {}
 
 resource "azurerm_resource_group" "main" {
-  name     = "rg-${local.project}-${local.environment}"
+  name     = "rg-${local.project}-${local.environment}-saadhamzaconstant"
   location = var.location
   tags     = local.common_tags
 }
-
-
-# Log Analytics removed for faster dev deployment
 
 
 module "database" {

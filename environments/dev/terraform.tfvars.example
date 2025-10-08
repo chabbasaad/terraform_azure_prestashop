@@ -1,0 +1,12 @@
+
+# Configuration de base
+location = "francecentral"
+subscription_id = "subscription_id"  # Mettre votre subscription_id
+# Configuration de la base de données
+db_admin_user = ""
+db_password = ""  
+
+# Configuration PrestaShop
+admin_email = ""
+prestashop_admin_password = ""
+

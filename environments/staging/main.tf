@@ -10,6 +10,7 @@ terraform {
       version = "~> 3.4"
     }
   }
+
 }
 
 provider "azurerm" {
@@ -34,7 +35,7 @@ resource "azurerm_resource_group" "tfstate" {
   tags     = local.common_tags
 }
 
-# Log Analytics Workspace removed for simplified staging deployment
+
 
 resource "azurerm_storage_account" "tfstate" {
   name                     = "tstfstatestaging"
@@ -76,8 +77,6 @@ resource "azurerm_application_insights" "prestashop" {
   application_type    = "web"
   tags                = local.common_tags
 }
-
-# Networking and Secrets modules removed for simplified staging deployment (same as dev)
 
 module "database" {
   source = "../../modules/database"

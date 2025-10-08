@@ -73,4 +73,3 @@ output "log_analytics_workspace" {
   }
 }
 
-# Networking and Secrets outputs removed for simplified staging deployment

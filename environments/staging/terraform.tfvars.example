@@ -1,0 +1,12 @@
+
+location        = "ukwest" # Azure for Students - available region close to France
+subscription_id = ""
+
+# Configuration de la base de données
+db_admin_user = ""
+db_password   = ""
+
+# Configuration PrestaShop
+admin_email               = ""
+prestashop_admin_password = ""
+

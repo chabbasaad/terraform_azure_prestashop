@@ -2,12 +2,12 @@
 
 # Configuration de base
 location        = "francecentral" # France Central (compatible Azure for Students)
-subscription_id = "98986790-05f9-4237-b612-4814a09270dd"
+subscription_id = "subscription_id"
 
 # Configuration de la base de données
 db_admin_user = "tayloradmin"
-db_password   = "TaylorShift2025!ProdAdmin" 
+db_password   = "db_password" 
 
 # Configuration PrestaShop
-admin_email               = "admin@taylorshift.com"
-prestashop_admin_password = "TaylorShift2025!ProdAdmin"
+admin_email               = "email"
+prestashop_admin_password = "prestashop_admin_password"

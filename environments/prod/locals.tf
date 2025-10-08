@@ -27,3 +27,4 @@ locals {
     # Autoscaling
     concurrent_requests_threshold = 10
 }
+}
