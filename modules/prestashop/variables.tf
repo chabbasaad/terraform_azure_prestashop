@@ -46,3 +46,14 @@ variable "admin_password" {
   type        = string
   sensitive   = true
 }
+
+variable "min_replicas" {
+  description = "Minimum number of container app replicas"
+  type        = number
+}
+
+variable "max_replicas" {
+  description = "Maximum number of container app replicas"
+  type        = number
+  
+}

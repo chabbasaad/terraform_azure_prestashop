@@ -14,10 +14,10 @@ terraform {
 
 provider "azurerm" {
   features {
-    key_vault {
-      purge_soft_delete_on_destroy    = true
-      recover_soft_deleted_key_vaults = true
-    }
+    # key_vault {
+    #   purge_soft_delete_on_destroy    = true
+    #   recover_soft_deleted_key_vaults = true
+    # }
     resource_group {
       prevent_deletion_if_contains_resources = false
     }
@@ -62,7 +62,9 @@ module "prestashop" {
   db_password                  = var.db_password
   admin_email                  = var.admin_email
   admin_password               = var.prestashop_admin_password
-  
+  min_replicas                  = local.config.min_replicas
+  max_replicas                  = local.config.max_replicas
+
   # Force explicit dependency to ensure database is ready
   depends_on = [module.database]
 }

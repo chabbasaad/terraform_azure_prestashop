@@ -56,7 +56,7 @@ output "production_summary" {
     location           = var.location
     mysql_sku          = local.config.db_sku
     mysql_storage_gb   = local.config.db_storage_gb
-    redis_sku          = "Standard C0"
+    redis_sku          = "basic c1"
     min_replicas       = local.config.min_replicas
     max_replicas       = local.config.max_replicas
     cpu_per_replica    = local.config.cpu_limit

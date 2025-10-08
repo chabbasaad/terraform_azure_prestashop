@@ -15,10 +15,10 @@ terraform {
 
 provider "azurerm" {
   features {
-    key_vault {
-      purge_soft_delete_on_destroy    = true
-      recover_soft_deleted_key_vaults = true
-    }
+    # key_vault {
+    #   purge_soft_delete_on_destroy    = true
+    #   recover_soft_deleted_key_vaults = true
+    # }
     resource_group {
       prevent_deletion_if_contains_resources = false
     }
@@ -83,15 +83,15 @@ resource "azurerm_redis_cache" "prestashop" {
   location            = var.location
   resource_group_name = azurerm_resource_group.main.name
 
-  capacity = 1
-  family   = "C"
-  sku_name = "Basic"
+  capacity = local.config.redis.capacity
+  family   = local.config.redis.family
+  sku_name = local.config.redis.sku_name
 
-  public_network_access_enabled = true
-  minimum_tls_version           = "1.2"
+  public_network_access_enabled = local.config.redis.public_network_access_enabled
+  minimum_tls_version           = local.config.redis.minimum_tls_version
 
   redis_configuration {
-    maxmemory_policy = "allkeys-lru"
+    maxmemory_policy = local.config.redis.maxmemory_policy
   }
 
   tags = local.common_tags
@@ -126,6 +126,8 @@ module "prestashop" {
   db_password         = var.db_password
   admin_email         = var.admin_email
   admin_password      = var.prestashop_admin_password
+  min_replicas         = local.config.min_replicas
+  max_replicas         = local.config.max_replicas
 
 
   depends_on = [module.database, azurerm_redis_cache.prestashop, azurerm_application_insights.prestashop]

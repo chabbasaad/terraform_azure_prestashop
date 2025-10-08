@@ -24,8 +24,8 @@ resource "azurerm_container_app" "prestashop" {
   }
 
   template {
-    min_replicas = 1
-    max_replicas = 3
+    min_replicas = var.min_replicas
+    max_replicas = var.max_replicas
 
     container {
       name   = "prestashop"

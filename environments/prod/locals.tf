@@ -26,5 +26,15 @@ locals {
 
     # Autoscaling
     concurrent_requests_threshold = 10
+
+    # Redis Cache Configuration
+    redis = {
+      capacity = 1
+      family   = "C"
+      sku_name = "Basic"
+      public_network_access_enabled = true
+      minimum_tls_version           = "1.2"
+      maxmemory_policy             = "allkeys-lru"
+    }
 }
 }

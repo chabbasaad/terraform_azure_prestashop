@@ -9,6 +9,5 @@ variable "subscription_id" {
   sensitive   = true
 }
 
-# Variables de configuration avancée (pour usage futur)
-# Ces variables sont préparées pour des fonctionnalités avancées
+
 
