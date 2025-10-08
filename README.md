@@ -58,14 +58,16 @@ az account set --subscription "YOUR_SUBSCRIPTION_ID"
 # Deploy Development Environment
 cd environments/dev && terraform init && terraform apply
 
-![Development Environment](https://raw.githubusercontent.com/chabbasaad/terraform_azure_prestashop/main/images_terraform_guid/dev_env.png)
-
 # Deploy Staging Environment
 cd ../staging && terraform init && terraform apply  
 
 # Deploy Production Environment
 cd ../prod && terraform init && terraform apply
 ```
+
+
+![Development Environment](https://raw.githubusercontent.com/chabbasaad/terraform_azure_prestashop/main/images_terraform_guid/dev_env.png)
+
 
 ## 🔧 Environment Configuration
 
