@@ -15,7 +15,6 @@ output "container_app_fqdn" {
   value       = azurerm_container_app.prestashop.ingress[0].fqdn
 }
 
-# User assigned identity and application insights outputs removed for faster dev deployment
 
 output "app_url" {
   description = "Latest revision FQDN"

@@ -14,6 +14,7 @@
 .terraformrc
 terraform.rc
 
+#terraform.tfvars
 *.tfstate
 *.tfstate.*
 

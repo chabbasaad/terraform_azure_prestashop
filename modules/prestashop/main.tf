@@ -1,7 +1,4 @@
-# Simplified PrestaShop Module with Container Apps
-# Based onecho '=== AUTOMATED PRESTASHOP SETUP ===' && chown -R www-data:www-data /var/www/html/ && chmod -R 755 /var/www/html/ && apache2-foreground & APACHE_PID=$! && sleep 15 && if [ -d /var/www/html/install ]; then echo 'Installing PrestaShop...' && (php /var/www/html/install/index_cli.php --domain="$DOMAIN_NAME" --db_server="$DB_SERVER" --db_name="$DB_NAME" --db_user="$DB_USER" --db_password="$DB_PASSWD" --email="$ADMIN_EMAIL" --password="$ADMIN_PASSWORD" --name='TaylorShift' --country='fr' --language='fr' --ssl=1 || true); sleep 5 && echo 'CLEANUP START' && rm -rf /var/www/html/install && echo 'install folder removed'; else echo 'Already installed'; fi && echo 'ADMIN SETUP' && if [ -d /var/www/html/admin ] && [ ! -d /var/www/html/adminportal ]; then mv /var/www/html/admin /var/www/html/adminportal && echo 'admin renamed to adminportal'; else echo 'admin already renamed'; fi && echo 'SETUP COMPLETE' && wait $APACHE_PIDworking version but with Container Apps for scaling
 
-# Random suffix removed for faster deployment
 
 # Container App Environment
 resource "azurerm_container_app_environment" "main" {

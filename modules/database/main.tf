@@ -1,10 +1,10 @@
 # Simplified Database Module
 # Based on working version with minimal configuration
 
-# Random suffix removed for faster deployment
+
 
 resource "azurerm_mysql_flexible_server" "main" {
-  name                   = "ts-db-${var.environment}"
+  name                   = "ts-db-${var.environment}-saadhamzaconstant"
   location               = var.location
   resource_group_name    = var.resource_group_name
   administrator_login    = var.admin_user
