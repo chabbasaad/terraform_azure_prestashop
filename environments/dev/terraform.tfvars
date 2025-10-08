@@ -10,4 +10,4 @@ db_password = "TaylorShift2025!Dev"
 # Configuration PrestaShop
 admin_email = "admin@taylorshift-dev.com"  
 prestashop_admin_password = "TaylorAdmin2025!Dev"  
-custom_domain = "localhost"  
+

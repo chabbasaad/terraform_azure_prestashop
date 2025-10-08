@@ -10,6 +10,14 @@ terraform {
       version = "~> 3.4"
     }
   }
+  
+  backend "azurerm" {
+    resource_group_name  = "rg-terraform-state-taylor-shift"
+    storage_account_name = "sttfstatetaylorshift"
+    container_name       = "tfstate"
+    key                  = "dev/terraform.tfstate"
+    use_azuread_auth     = false
+  }
 }
 
 provider "azurerm" {
@@ -65,6 +73,6 @@ module "prestashop" {
   min_replicas                  = local.config.min_replicas
   max_replicas                  = local.config.max_replicas
 
-  # Force explicit dependency to ensure database is ready
+  # Force to ensure database is ready
   depends_on = [module.database]
 }

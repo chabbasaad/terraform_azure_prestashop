@@ -52,11 +52,20 @@ az account set --subscription "YOUR_SUBSCRIPTION_ID"
 
 ![Azure Subscription](https://raw.githubusercontent.com/chabbasaad/terraform_azure_prestashop/main/images_terraform_guid/subscription_azure.png)
 
-**Step 3:** Deploy environments
+**Step 3:** Create backend infrastructure (Terraform State Storage)
+
+```bash
+# Create Azure Storage Account for centralized state management
+cd remote_tfstate
+terraform init
+terraform apply
+```
+
+**Step 4:** Deploy environments
 
 ```bash
 # Deploy Development Environment
-cd environments/dev && terraform init && terraform apply
+cd ../environments/dev && terraform init && terraform apply
 
 # Deploy Staging Environment
 cd ../staging && terraform init && terraform apply  

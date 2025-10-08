@@ -11,7 +11,7 @@ locals {
 
   config = {
     db_sku              = "B_Standard_B1ms"
-    db_storage_gb       = 128
+    db_storage_gb       = 32
     db_backup_retention = 14
     min_replicas        = 1
     max_replicas        = 4
