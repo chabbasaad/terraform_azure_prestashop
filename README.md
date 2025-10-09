@@ -77,6 +77,35 @@ cd ../prod && terraform init && terraform apply
 
 ![Development Environment](https://raw.githubusercontent.com/chabbasaad/terraform_azure_prestashop/main/images_terraform_guid/dev_env.png)
 
+## 📁 Terraform State Management
+
+### View Storage Container Contents
+
+Check what state files are stored in your Azure Storage Account:
+
+```bash
+az storage blob list --account-name sttfstatetaylor09270dd --container-name tfstate --output table
+az storage blob list --account-name sttfstatetaylor09270dd --container-name tfstate --output json
+```
+
+### View Terraform Outputs
+
+Get deployment information and URLs for each environment:
+
+```bash
+# Development Environment Outputs
+cd environments/dev
+terraform output
+
+# Staging Environment Outputs  
+cd ../staging
+terraform output
+
+# Production Environment Outputs
+cd ../prod
+terraform output
+```
+
 
 ## 🔧 Environment Configuration
 

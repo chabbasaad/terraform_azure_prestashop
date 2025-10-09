@@ -6,7 +6,7 @@ subscription_id = "98986790-05f9-4237-b612-4814a09270dd"
 project_name = "taylor-shift"
 
 # Storage configuration
-storage_account_name = "sttfstatetaylorshift"
+storage_account_name = "sttfstatetaylor09270dd"
 resource_group_name = "rg-terraform-state-taylor-shift"
 container_name = "tfstate"
 

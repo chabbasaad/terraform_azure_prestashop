@@ -14,7 +14,7 @@ terraform {
   
   backend "azurerm" {
     resource_group_name  = "rg-terraform-state-taylor-shift"
-    storage_account_name = "sttfstatetaylorshift"
+    storage_account_name = "sttfstatetaylor09270dd"
     container_name       = "tfstate"
     key                  = "prod/terraform.tfstate"
     use_azuread_auth     = false
